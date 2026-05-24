@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: saveit-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --timeout 300 --workers 1
+    plan: free

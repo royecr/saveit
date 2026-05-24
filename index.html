@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SaveIt â ×××¨××ª ×¡×¨××× ××</title>
+  <title>SaveIt — הורדת סרטונים</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
 
-    /* âââ Dinosaur animation âââââââââââââââââââââââââââââââ */
+    /* ─── Dinosaur animation ─────────────────────────────── */
     .dino-wrap { position: relative; display: inline-block; }
 
     @keyframes dino-chomp {
@@ -44,7 +44,7 @@
     .bit-2         { top: 20px; right:  4px; animation: bit-fly-2 0.9s ease-out infinite 0.3s; }
     .bit-3         { top:  4px; right:  8px; animation: bit-fly-3 0.9s ease-out infinite 0.6s; }
 
-    /* âââ Dot loader âââââââââââââââââââââââââââââââââââââââ */
+    /* ─── Dot loader ─────────────────────────────────────── */
     @keyframes dot-blink {
       0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
       40%            { opacity: 1;   transform: scale(1); }
@@ -55,12 +55,12 @@
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
 
-    /* âââ Format card hover ââââââââââââââââââââââââââââââââ */
+    /* ─── Format card hover ──────────────────────────────── */
     .format-card { transition: border-color 0.15s, background 0.15s, transform 0.1s; }
     .format-card:hover { border-color: #ef4444; background: #fff5f5; transform: translateX(-2px); }
     .format-card:active { transform: translateX(-1px); }
 
-    /* âââ Fade in ââââââââââââââââââââââââââââââââââââââââââ */
+    /* ─── Fade in ────────────────────────────────────────── */
     @keyframes fade-up {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -70,7 +70,7 @@
 </head>
 <body class="bg-white min-h-screen flex flex-col">
 
-  <!-- ââ Header âââââââââââââââââââââââââââââââââââââââââââ -->
+  <!-- ── Header ─────────────────────────────────────────── -->
   <header class="border-b border-gray-100 px-6 py-4">
     <div class="max-w-2xl mx-auto flex items-center">
       <a href="#" onclick="resetAll(); return false;"
@@ -78,14 +78,14 @@
     </div>
   </header>
 
-  <!-- ââ Main âââââââââââââââââââââââââââââââââââââââââââââ -->
+  <!-- ── Main ───────────────────────────────────────────── -->
   <main class="flex-1 flex flex-col items-center justify-center px-4 py-8 sm:py-16">
 
     <!-- Hero -->
     <div class="text-center mb-10">
-      <div class="text-5xl mb-4">â¬ï¸</div>
-      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">×××¨× ×¡×¨××× ××</h1>
-      <p class="text-gray-400 text-base">××××§ ×§××©××¨ â ×××¨ ×××××ª â ×××¨×</p>
+      <div class="text-5xl mb-4">⬇️</div>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">הורד סרטונים</h1>
+      <p class="text-gray-400 text-base">הדבק קישור ← בחר איכות ← הורד</p>
     </div>
 
     <!-- Platform sections -->
@@ -93,7 +93,7 @@
 
       <!-- YouTube -->
       <div class="border-2 border-gray-100 rounded-2xl p-4">
-        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">â¶ï¸ YouTube</p>
+        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">▶️ YouTube</p>
         <div class="flex gap-2">
           <input
             id="ytInput"
@@ -106,34 +106,34 @@
             onclick="fetchInfo('ytInput')"
             class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold px-4 sm:px-6 py-3 rounded-xl transition-colors whitespace-nowrap text-sm shadow-sm"
           >
-            ×××¨× â
+            הורד ↓
           </button>
         </div>
       </div>
 
       <!-- Facebook + Instagram -->
       <div class="border-2 border-gray-100 rounded-2xl p-4">
-        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">ð Facebook &nbsp;Â·&nbsp; ð¸ Instagram</p>
+        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">📘 Facebook &nbsp;·&nbsp; 📸 Instagram</p>
         <div class="flex gap-2">
           <input
             id="fbInput"
             type="text"
             dir="ltr"
-            placeholder="https://www.facebook.com/... ×× https://www.instagram.com/..."
+            placeholder="https://www.facebook.com/... או https://www.instagram.com/..."
             class="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-400 transition-all"
           />
           <button
-            onclick="fetchInfo'&bInput')"
+            onclick="fetchInfo('fbInput')"
             class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold px-4 sm:px-6 py-3 rounded-xl transition-colors whitespace-nowrap text-sm shadow-sm"
-           >
-            ×××¨× â
+          >
+            הורד ↓
           </button>
         </div>
       </div>
 
       <!-- TikTok -->
       <div class="border-2 border-gray-100 rounded-2xl p-4">
-        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">ðµ TikTok</p>
+        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">🎵 TikTok</p>
         <div class="flex gap-2">
           <input
             id="ttInput"
@@ -146,27 +146,27 @@
             onclick="fetchInfo('ttInput')"
             class="bg-gray-800 hover:bg-gray-900 active:bg-black text-white font-semibold px-4 sm:px-6 py-3 rounded-xl transition-colors whitespace-nowrap text-sm shadow-sm"
           >
-            ×××¨× â
+            הורד ↓
           </button>
         </div>
       </div>
 
       <!-- Telegram -->
       <div class="border-2 border-gray-100 rounded-2xl p-4">
-        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">âï¸ Telegram â ×××× ×§×××¦××ª ×¤×¨××××ª</p>
+        <p class="text-xs font-semibold text-gray-400 text-right mb-2 tracking-wide">✈️ Telegram — כולל קבוצות פרטיות</p>
         <div class="flex gap-2">
           <input
             id="tgInput"
             type="text"
             dir="ltr"
-            placeholder="https://t.me/channel/123 ×× https://t.me/c/..."
+            placeholder="https://t.me/channel/123 או https://t.me/c/..."
             class="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-all"
           />
           <button
             onclick="downloadTelegram()"
             class="bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold px-4 sm:px-6 py-3 rounded-xl transition-colors whitespace-nowrap text-sm shadow-sm"
           >
-            ×××¨× â
+            הורד ↓
           </button>
         </div>
       </div>
@@ -174,22 +174,22 @@
       <p id="errorMsg" class="text-red-500 text-sm text-right hidden"></p>
     </div>
 
-    <!-- ââ Loading âââââââââââââââââââââââââââââââââââââââ -->
+    <!-- ── Loading ─────────────────────────────────────── -->
     <div id="loadingState" class="hidden mt-14 text-center fade-up">
       <div class="dino-wrap mb-3">
-        <span class="dino">ð¦</span>
-        <span class="bit bit-1">ð¬</span>
-        <span class="bit bit-2">â¨</span>
-        <span class="bit bit-3">ð¥</span>
+        <span class="dino">🦕</span>
+        <span class="bit bit-1">🎬</span>
+        <span class="bit bit-2">✨</span>
+        <span class="bit bit-3">🎥</span>
         <div class="dino-shadow"></div>
       </div>
-      <p class="text-gray-700 font-medium mt-3">×××× ×××××¨ ×××× ××ª ××¡×¨××× ×©××...</p>
-      <p class="text-gray-400 text-sm mt-1">×¨×§ ×¨××¢, ×××¢× ×©×
+      <p class="text-gray-700 font-medium mt-3">הדינוזאור אוכל את הסרטון שלך...</p>
+      <p class="text-gray-400 text-sm mt-1">רק רגע, כמעט שם
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </p>
     </div>
 
-    <!-- ââ Result (YouTube / Facebook / Instagram / TikTok) ââ -->
+    <!-- ── Result (YouTube / Facebook / Instagram / TikTok) ── -->
     <div id="resultState" class="hidden mt-8 w-full max-w-2xl fade-up">
       <div class="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
 
@@ -210,26 +210,26 @@
 
       <button onclick="reset()"
               class="mt-4 text-sm text-gray-400 hover:text-gray-600 transition-colors w-full text-center">
-        â ×××¨× ×¡×¨××× ×××¨
+        ← הורד סרטון אחר
       </button>
     </div>
 
   </main>
 
-  <!-- ââ Footer âââââââââââââââââââââââââââââââââââââââââââ -->
+  <!-- ── Footer ─────────────────────────────────────────── -->
   <footer class="text-center py-4 text-xs text-gray-300">
-    SaveIt Â· ××©××××© ×××©× ×××× Â· ××× ××××××ª ×××¦×¨××
+    SaveIt · לשימוש אישי בלבד · כבד זכויות יוצרים
   </footer>
 
   <script>
-    // ââ Config ââââââââââââââââââââââââââââââââââââââââââââ
+    // ── Config ────────────────────────────────────────────
     const API = 'https://saveit-api-8vpy.onrender.com';
 
-    // ââ State âââââââââââââââââââââââââââââââââââââââââââââ
+    // ── State ─────────────────────────────────────────────
     let savedUrl   = '';
     let savedTitle = '';
 
-    // ââ Helpers âââââââââââââââââââââââââââââââââââââââââââ
+    // ── Helpers ───────────────────────────────────────────
     function show(id)  { document.getElementById(id).classList.remove('hidden'); }
     function hide(id)  { document.getElementById(id).classList.add('hidden'); }
 
@@ -258,7 +258,7 @@
 
     function resetAll() { reset(); }
 
-    // ââ Main fetch (YouTube / Facebook / Instagram / TikTok) ââ
+    // ── Main fetch (YouTube / Facebook / Instagram / TikTok) ──
     async function fetchInfo(inputId) {
       const url = document.getElementById(inputId).value.trim();
       if (!url) return;
@@ -276,7 +276,7 @@
 
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
-          throw new Error(err.error || `×©×××× ${res.status}`);
+          throw new Error(err.error || `שגיאה ${res.status}`);
         }
 
         const data = await res.json();
@@ -285,59 +285,54 @@
         renderResult(data);
 
       } catch (e) {
-        showError(e.message || '×××¨×¢× ×©××××. × ×¡× ×©××.');
+        showError(e.message || 'אירעה שגיאה. נסה שוב.');
       } finally {
         hide('loadingState');
       }
     }
 
-    // ââ Telegram â ×××¨×× ××©××¨× (××× ××××¨×ª ×××××ª) âââââââââ
+    // ── Telegram — הורדה ישירה (ללא בחירת איכות) ─────────
     function downloadTelegram() {
       const url = document.getElementById('tgInput').value.trim();
       if (!url) return;
 
       hideError();
 
-      // ××¦×××× ××××¢×ª ×××ª× ×
+      // מציגים הודעת המתנה
       const loadDiv = document.getElementById('loadingState');
       loadDiv.classList.remove('hidden');
       document.querySelector('#loadingState p.text-gray-700').textContent =
-        '×××× ×××××¨ ×××¨×× ×××××¨×...';
+        'הדינוזאור מוריד מטלגרם...';
       document.querySelector('#loadingState p.text-gray-400').innerHTML =
-        '×××× ××§××ª ×¢× ××§× â ×ª××× ××××× ××§×××¥ <span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+        'יכול לקחת עד דקה — תלוי בגודל הקובץ <span class="dot"></span><span class="dot"></span><span class="dot"></span>';
 
       const downloadUrl = `${API}/api/telegram-download?url=${encodeURIComponent(url)}`;
 
-      // window.location.href â ×××¤××¤× ×¢×××¨ ×××ª×××ª ××× ×××¨×× ××ª ××§×××¥ ××××××××ª
-      // ×××£ ×× ××× ×× ××©×¨×ª ×××××¨ Content-Disposition: attachment
       window.location.href = downloadUrl;
 
-      // ××¡×ª××¨×× ××ª ×××¢×× × ×××¨× 90 ×©× ×××ª (××× ××§×¡×××× ×¡×××¨)
       setTimeout(() => hide('loadingState'), 90000);
     }
 
-    // ââ Quality presets âââââââââââââââââââââââââââââââââââ
     const QUALITIES = [
-      { quality: '360',  label: '360p',         sublabel: '×§×××¥ ×§×× Â· ××××¨×× ××××¨×',    icon: 'ð±', color: '#22c55e' },
-      { quality: '480',  label: '480p',          sublabel: '××× ×× × Â· ××ª××× ××××¤××',      icon: 'ðº', color: '#eab308' },
-      { quality: '720',  label: '720p HD',       sublabel: '×××××ª ××××× Â· ××× ×¤××¤×××¨×', icon: 'ð¥ï¸', color: '#f97316' },
-      { quality: '1080', label: '1080p Full HD', sublabel: '××¢××× Â· ×§×××¥ ×××× ×××ª×¨',   icon: 'â­', color: '#ef4444' },
+      { quality: '360',  label: '360p',         sublabel: 'קובץ קטן · מהורדה וירה',    icon: '📱', color: '#22c55e' },
+      { quality: '480',  label: '480p',          sublabel: 'בינוני · מתאים לטלפון',      icon: '📺', color: '#eab308' },
+      { quality: '720',  label: '720p HD',       sublabel: 'איכות גבוהה · הכי פופולרי', icon: '🖥️', color: '#f97316' },
+      { quality: '1080', label: '1080p Full HD', sublabel: 'מעולה · קובץ גדול יותר',   icon: '⭐', color: '#ef4444' },
     ];
 
-    // ââ Render result âââââââââââââââââââââââââââââââââââââ
     function renderResult(data) {
       document.getElementById('thumbnail').src     = data.thumbnail || '';
-      document.getElementById('videoTitle').textContent   = data.title   || '××× ×××ª×¨×ª';
-      document.getElementById('videoChannel').textContent = data.channel ? `ðº ${data.channel}` : '';
+      document.getElementById('videoTitle').textContent   = data.title   || 'לאכות';
+      document.getElementById('videoChannel').textContent = data.channel ? `📺 ${data.channel}` : '';
       document.getElementById('videoDuration').textContent =
-        data.duration ? `â± ${fmtSeconds(data.duration)}` : '';
+        data.duration ? `⏱ ${fmtSeconds(data.duration)}` : '';
 
       const list = document.getElementById('formatList');
       list.innerHTML = '';
 
       const title = document.createElement('p');
       title.className = 'text-xs text-gray-400 text-right mb-1 px-1';
-      title.textContent = '×××¨ ×××××ª ×××¨××:';
+      title.textContent = 'בחר איכות הורדה:';
       list.appendChild(title);
 
       QUALITIES.forEach(q => {
@@ -355,9 +350,9 @@
       list.appendChild(div);
 
       list.appendChild(makeCard({
-        label   : 'MP3 â ××××× ××××',
-        sublabel: '×××××§× / ×¤×××§××¡× Â· ××× ×××××',
-        icon    : 'ðµ',
+        label   : 'MP3 — אודיו בלבד',
+        sublabel: 'מוזיקה / פודקאסט · ללא וידאו',
+        icon    : '🎵',
         color   : '#8b5cf6',
         href    : `${API}/api/download?url=${encodeURIComponent(savedUrl)}&quality=mp3&title=${encodeURIComponent(savedTitle)}`,
       }));
@@ -375,12 +370,11 @@
           <div class="font-semibold text-gray-800 text-sm">${label}</div>
           <div class="text-gray-400 text-xs">${sublabel}</div>
         </div>
-        <span class="text-sm font-bold" style="color:${color}">×××¨× â</span>
+        <span class="text-sm font-bold" style="color:${color}">הורד ↓</span>
       `;
       return a;
     }
 
-    // ââ Enter key âââââââââââââââââââââââââââââââââââââââââ
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('ytInput').addEventListener('keypress', e => {
         if (e.key === 'Enter') fetchInfo('ytInput');
@@ -397,4 +391,4 @@
     });
   </script>
 </body>
-</h
+</html>

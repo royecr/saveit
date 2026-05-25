@@ -263,6 +263,12 @@
       const url = document.getElementById(inputId).value.trim();
       if (!url) return;
 
+      // YouTube — הפנה ל-cobalt.tools (YouTube חוסם הורדות משרתי ענן)
+      if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        window.open('https://cobalt.tools', '_blank');
+        return;
+      }
+
       hideError();
       hide('resultState');
       show('loadingState');
@@ -308,21 +314,26 @@
 
       const downloadUrl = `${API}/api/telegram-download?url=${encodeURIComponent(url)}`;
 
+      // window.location.href — הדפדפן עובר לכתובת ואז מוריד את הקובץ אוטומטית
+      // הדף לא זזה אם השרת מחזיר Content-Disposition: attachment
       window.location.href = downloadUrl;
 
+      // מסתירים את הטעינה אחרי 90 שניות (זמן מקסימלי סביר)
       setTimeout(() => hide('loadingState'), 90000);
     }
 
+    // ── Quality presets ───────────────────────────────────
     const QUALITIES = [
-      { quality: '360',  label: '360p',         sublabel: 'קובץ קטן · מהורדה וירה',    icon: '📱', color: '#22c55e' },
+      { quality: '360',  label: '360p',         sublabel: 'קובץ קטן · מהורדה מהירה',    icon: '📱', color: '#22c55e' },
       { quality: '480',  label: '480p',          sublabel: 'בינוני · מתאים לטלפון',      icon: '📺', color: '#eab308' },
       { quality: '720',  label: '720p HD',       sublabel: 'איכות גבוהה · הכי פופולרי', icon: '🖥️', color: '#f97316' },
       { quality: '1080', label: '1080p Full HD', sublabel: 'מעולה · קובץ גדול יותר',   icon: '⭐', color: '#ef4444' },
     ];
 
+    // ── Render result ─────────────────────────────────────
     function renderResult(data) {
       document.getElementById('thumbnail').src     = data.thumbnail || '';
-      document.getElementById('videoTitle').textContent   = data.title   || 'לאכות';
+      document.getElementById('videoTitle').textContent   = data.title   || 'ללא כותרת';
       document.getElementById('videoChannel').textContent = data.channel ? `📺 ${data.channel}` : '';
       document.getElementById('videoDuration').textContent =
         data.duration ? `⏱ ${fmtSeconds(data.duration)}` : '';
@@ -375,6 +386,7 @@
       return a;
     }
 
+    // ── Enter key ─────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('ytInput').addEventListener('keypress', e => {
         if (e.key === 'Enter') fetchInfo('ytInput');

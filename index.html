@@ -263,9 +263,28 @@
       const url = document.getElementById(inputId).value.trim();
       if (!url) return;
 
-      // YouTube — הפנה ל-cobalt.tools (YouTube חוסם הורדות משרתי ענן)
+      // YouTube — הורד דרך cobalt.tools API
       if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        window.open('https://cobalt.tools', '_blank');
+        hideError();
+        hide('resultState');
+        show('loadingState');
+        try {
+          const res = await fetch('https://api.cobalt.tools/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ url })
+          });
+          const data = await res.json();
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            showError(data.error?.code || 'שגיאה בהורדה מיוטיוב');
+          }
+        } catch(e) {
+          showError('שגיאה בחיבור לשרת ההורדות');
+        } finally {
+          hide('loadingState');
+        }
         return;
       }
 

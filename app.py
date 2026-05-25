@@ -1,5 +1,5 @@
 """
-SaveIt Backend â YouTube / Facebook / Instagram / TikTok / Telegram downloader
+SaveIt Backend — YouTube / Facebook / Instagram / TikTok / Telegram downloader
 Flask + yt-dlp + telethon
 """
 
@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-# ââ Helpers âââââââââââââââââââââââââââââââââââââââââââââââ
+# ── Helpers ─────────────────────────────────────────────────────
 
 def is_supported_url(url: str) -> bool:
     supported = [
@@ -34,7 +34,7 @@ def safe_filename(title: str) -> str:
     return re.sub(r'[\\/*?:"<>|]', '', title).strip() or "video"
 
 
-# ââ /api/info âââââââââââââââââââââââââââââââââââââââââââââ
+# ── /api/info ─────────────────────────────────────────────────────
 
 @app.route("/api/info", methods=["POST"])
 def info():
@@ -44,12 +44,13 @@ def info():
     if not url:
         return jsonify({"error": "URL is required"}), 400
     if not is_supported_url(url):
-        return jsonify({"error": "×§××©××¨ ×× × ×ª××. × ×¡× YouTube, Facebook, Instagram ×× TikTok"}), 400
+        return jsonify({"error": "קישור לא נתמך. נסה YouTube, Facebook, Instagram או TikTok"}), 400
 
     ydl_opts = {
-        "quiet"     : True,
-        "noplaylist": True,
-        "no_warnings": True,
+        "quiet"          : True,
+        "noplaylist"     : True,
+        "no_warnings"    : True,
+        "extractor_args" : {"youtube": {"player_client": ["android"]}},
     }
 
     try:
@@ -89,7 +90,7 @@ def get_format_string(url: str, quality: str) -> str:
         return SOCIAL_FORMAT
 
 
-# ââ /api/download âââââââââââââââââââââââââââââââââââââââââ
+# ── /api/download ─────────────────────────────────────────────────────
 
 @app.route("/api/download")
 def download():
@@ -114,11 +115,12 @@ def _download_video(url, quality, fname):
     fmt = get_format_string(url, quality)
 
     ydl_opts = {
-        "format"     : fmt,
-        "outtmpl"    : os.path.join(tmpdir, "video.%(ext)s"),
-        "noplaylist" : True,
-        "quiet"      : False,
-        "no_warnings": False,
+        "format"         : fmt,
+        "outtmpl"        : os.path.join(tmpdir, "video.%(ext)s"),
+        "noplaylist"     : True,
+        "quiet"          : False,
+        "no_warnings"    : False,
+        "extractor_args" : {"youtube": {"player_client": ["android"]}},
     }
 
     try:
@@ -127,7 +129,7 @@ def _download_video(url, quality, fname):
 
         files = os.listdir(tmpdir)
         if not files:
-            return jsonify({"error": "Download failed â no file created"}), 500
+            return jsonify({"error": "Download failed — no file created"}), 500
 
         filepath = os.path.join(tmpdir, files[0])
         ext      = files[0].rsplit(".", 1)[-1]
@@ -149,7 +151,7 @@ def _download_video(url, quality, fname):
             stream_and_cleanup(),
             mimetype=f"video/{ext}",
             headers={
-                "Content-Disposition": f"attachment; filename=\"video.{ext}\"; filename*=UTF-8''{encoded}",
+                "Content-Disposition": f'attachment; filename="video.{ext}"; filename*=UTF-8\'\'{encoded}',
                 "Content-Length"     : str(os.path.getsize(filepath)),
                 "X-Accel-Buffering"  : "no",
             },
@@ -170,12 +172,13 @@ def _download_audio(url, fname):
     tmpdir = tempfile.mkdtemp()
 
     ydl_opts = {
-        "format"    : "bestaudio/best",
-        "outtmpl"   : os.path.join(tmpdir, "audio.%(ext)s"),
-        "noplaylist": True,
-        "quiet"     : True,
-        "no_warnings": True,
-        "postprocessors": [{
+        "format"         : "bestaudio/best",
+        "outtmpl"        : os.path.join(tmpdir, "audio.%(ext)s"),
+        "noplaylist"     : True,
+        "quiet"          : True,
+        "no_warnings"    : True,
+        "extractor_args" : {"youtube": {"player_client": ["android"]}},
+        "postprocessors" : [{
             "key"            : "FFmpegExtractAudio",
             "preferredcodec" : "mp3",
             "preferredquality": "192",
@@ -209,7 +212,7 @@ def _download_audio(url, fname):
             stream_and_cleanup(),
             mimetype="audio/mpeg",
             headers={
-                "Content-Disposition": f"attachment; filename=\"audio.mp3\"; filename*=UTF-8''{encoded}",
+                "Content-Disposition": f'attachment; filename="audio.mp3"; filename*=UTF-8\'\'{encoded}',
                 "Content-Length"     : str(os.path.getsize(filepath)),
                 "X-Accel-Buffering"  : "no",
             },
@@ -225,27 +228,27 @@ def _download_audio(url, fname):
         return jsonify({"error": str(e)}), 500
 
 
-# ââ /api/telegram-download ââââââââââââââââââââââââââââââââ
+# ── /api/telegram-download ────────────────────────────────────────────
 
 @app.route("/api/telegram-download")
 def telegram_download():
     url = (request.args.get("url") or "").strip()
 
     if not url or "t.me/" not in url:
-        return jsonify({"error": "×§××©××¨ ××××¨× ×× ×ª×§××"}), 400
+        return jsonify({"error": "קישור טלגרם לא תקין"}), 400
 
     # Check config exists
     try:
         from telegram_config import API_ID, API_HASH
     except ImportError:
-        return jsonify({"error": "××××¨× ×× ×××××¨ â ×¨×× ×××¨×××ª ××××¨×"}), 503
+        return jsonify({"error": "טלגרם לא מוגדר — ראה הוראות הגדרה"}), 503
 
     if not API_ID or not API_HASH:
-        return jsonify({"error": "××× API_ID ×-API_HASH ××§×××¥ telegram_config.py"}), 503
+        return jsonify({"error": "מלא API_ID ו-API_HASH בקובץ telegram_config.py"}), 503
 
     session_file = os.path.join(os.path.dirname(__file__), "telegram_session.txt")
     if not os.path.exists(session_file):
-        return jsonify({"error": "×× ×××××¨ ×××××¨× â ××¤×¢× telegram_setup.py ×ª××××"}), 503
+        return jsonify({"error": "לא מחובר לטלגרם — הפעל telegram_setup.py תחילה"}), 503
 
     with open(session_file, 'r') as f:
         session_string = f.read().strip()
@@ -263,19 +266,19 @@ def _download_telegram(url, api_id, api_hash, session_string):
             [sys.executable, worker, url, tmpdir],
             capture_output=True,
             text=True,
-            timeout=300,  # ××§×¡×××× 5 ××§××ª
+            timeout=300,  # מקסימום 5 דקות
         )
 
         if result.returncode != 0:
             err = result.stderr.strip().split('\n')[-1].replace("ERROR: ", "")
-            return jsonify({"error": err or "×××¨×× × ××©××"}), 500
+            return jsonify({"error": err or "הורדה נכשלה"}), 500
 
         filepath = result.stdout.strip()
         if not filepath or not os.path.exists(filepath):
-            return jsonify({"error": "×××¨×× × ××©×× â ×× × ××¦× ×§×××¥"}), 500
+            return jsonify({"error": "הורדה נכשלה — לא נמצא קובץ"}), 500
 
         if not filepath:
-            return jsonify({"error": "×××¨×× × ××©××"}), 500
+            return jsonify({"error": "הורדה נכשלה"}), 500
 
         ext  = filepath.rsplit('.', 1)[-1].lower() if '.' in filepath else 'mp4'
         name = os.path.basename(filepath)
@@ -304,7 +307,7 @@ def _download_telegram(url, api_id, api_hash, session_string):
             stream_and_cleanup(),
             mimetype=mime,
             headers={
-                "Content-Disposition": f"attachment; filename=\"telegram.{ext}\"; filename*=UTF-8''{encoded}",
+                "Content-Disposition": f'attachment; filename="telegram.{ext}"; filename*=UTF-8\'\'{encoded}',
                 "Content-Length"     : str(os.path.getsize(filepath)),
                 "X-Accel-Buffering"  : "no",
             },
@@ -319,7 +322,7 @@ def _download_telegram(url, api_id, api_hash, session_string):
         return jsonify({"error": str(e)}), 500
 
 
-# ââ Run âââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ── Run ─────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
